@@ -3,8 +3,11 @@ package cmponlylint
 import (
 	"go/ast"
 	"go/token"
+	"go/types"
 	"strconv"
+	"strings"
 
+	"github.com/azuline/cmponly/internal/slices"
 	"golang.org/x/tools/go/analysis"
 )
 
@@ -28,44 +31,71 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			}
 			// If less than 2 args, we have nothing to check. So exit early.
 			if len(ce.Args) < 2 {
-				return true
+				return false
 			}
 
 			// Get the first argument, which is an instance of the struct type
 			// that we're selecting fields to compare on.
-			{
-				structTypeArg := ce.Args[0]
-				lit, ok := structTypeArg.(*ast.CompositeLit)
-				// If we can't parse the struct out, we can't do any comparisons,
-				// so ignore this node.
-				if !ok {
-					return true
+			//
+			// We support two cases for the struct arg:
+			// - Case 1: `StructType{}` -> CompositeLit
+			// - Case 2: `variable (of type StructType)` -> Ident
+			var structure *types.Struct
+			if lit, ok := ce.Args[0].(*ast.CompositeLit); ok {
+				if ident, ok := lit.Type.(*ast.Ident); ok {
+					obj := pass.TypesInfo.ObjectOf(ident)
+					if typeName, ok := obj.(*types.TypeName); ok {
+						if s, ok := typeName.Type().Underlying().(*types.Struct); ok {
+							structure = s
+						}
+					}
 				}
-
-				type_, ok := lit.Type.(*ast.Ident)
-				// Same deal as before; if we can't parse out the struct type,
-				// rip.
-				if !ok {
-					return true
+			} else if ident, ok := ce.Args[0].(*ast.Ident); ok {
+				obj := pass.TypesInfo.ObjectOf(ident)
+				if var_, ok := obj.(*types.Var); ok {
+					if named, ok := var_.Type().(*types.Named); ok {
+						if s, ok := named.Underlying().(*types.Struct); ok {
+							structure = s
+						}
+					}
 				}
-
-				pass.Reportf(ce.Pos(), "found struct type: %+v\n", type_)
+			}
+			// If we can't parse out the struct, exit early.
+			if structure == nil {
 				return false
+			}
+
+			// And now loop over the struct and list the valid fields on the struct.
+			var validFields []string
+			for i := 0; i < structure.NumFields(); i++ {
+				validFields = append(validFields, structure.Field(i).Name())
 			}
 
 			// Collect string representations of the fields we're selecting on
 			// the structType.
-			var args []string
+			var userSpecifiedFields []string
 			for _, fieldArg := range ce.Args[1:] {
 				if lit, ok := fieldArg.(*ast.BasicLit); ok && lit.Kind == token.STRING {
 					// Ignore fields with errors, means the passed in fields
 					// are variable. IDK why that would be the case.
-					if unquotedValue, err := strconv.Unquote(lit.Value); err != nil {
-						args = append(args, unquotedValue)
+					if unquotedValue, err := strconv.Unquote(lit.Value); err == nil {
+						userSpecifiedFields = append(userSpecifiedFields, unquotedValue)
 					}
 				}
 			}
 
+			// And get the names of fields that do not exist on the struct.
+			var invalidFields []string
+			for _, usf := range userSpecifiedFields {
+				if !slices.Contains(validFields, usf) {
+					invalidFields = append(invalidFields, usf)
+				}
+			}
+
+			// If any fields are invalid, report an error.
+			if len(invalidFields) != 0 {
+				pass.Reportf(ce.Pos(), "fields do not exist on struct: %s", strings.Join(invalidFields, ", "))
+			}
 			return false
 		})
 	}
