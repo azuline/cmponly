@@ -1,19 +1,14 @@
 package cmponlylint
 
 import (
-	"os"
-	"path/filepath"
+	"fmt"
 	"testing"
 
 	"golang.org/x/tools/go/analysis/analysistest"
 )
 
 func TestAll(t *testing.T) {
-	wd, err := os.Getwd()
-	if err != nil {
-		t.Fatalf("Failed to get wd: %s", err)
-	}
-
-	testdata := filepath.Join(filepath.Dir(filepath.Dir(wd)), "testdata")
-	analysistest.Run(t, testdata, Analyzer, "complexity")
+	testdata := analysistest.TestData()
+	fmt.Printf("%+v\n", testdata)
+	analysistest.Run(t, testdata, Analyzer, "cmponly")
 }

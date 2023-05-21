@@ -1,9 +1,9 @@
-package test
+package testdata
 
 import (
+	"cmponly"
 	"testing"
 
-	"github.com/azuline/cmponly/pkg/cmponly"
 	"github.com/google/go-cmp/cmp"
 )
 
