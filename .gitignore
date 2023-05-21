@@ -20,5 +20,7 @@
 # Go workspace file
 go.work
 
+.direnv
+
 # Intermediate testing file
 test.out
