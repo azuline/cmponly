@@ -1,0 +1,39 @@
+linters-settings:
+  goimports:
+    local-prefixes: github.com/azuline/cmponly
+
+run:
+  go: "1.18"
+  tests: true
+  timeout: 5m
+
+linters:
+  disable-all: true
+  enable:
+    - asciicheck
+    - deadcode
+    - depguard
+    - errcheck
+    - errorlint
+    - exhaustive
+    - gochecknoglobals
+    - gochecknoinits
+    - gocritic
+    - gofmt
+    - gofumpt
+    - goimports
+    - gosimple
+    - govet
+    - ineffassign
+    - nolintlint
+    - revive
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unparam
+    - varcheck
+    - whitespace
+
+issues:
+  max-same-issues: 10000
+  max-issues-per-linter: 10000

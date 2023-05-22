@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v15
+      - name: Build
+        run: nix develop --command make build
+      - name: Test
+        run: nix develop --command make test
+      - name: Lint
+        run: nix develop --command make lint
+      - name: Diff
+        run: git diff
+      - name: Status
+        run: git status
+      - name: Compare
+        run: bash -c '[[ -z $(git status -s) ]] || (exit 1)'
