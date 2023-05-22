@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/azuline/cmponly/pkg/cmponlylint"
 	"golang.org/x/tools/go/analysis/singlechecker"
+
+	"github.com/azuline/cmponly/pkg/cmponlylint"
 )
 
 func main() {

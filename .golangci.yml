@@ -11,12 +11,10 @@ linters:
   disable-all: true
   enable:
     - asciicheck
-    - deadcode
     - depguard
     - errcheck
     - errorlint
     - exhaustive
-    - gochecknoglobals
     - gochecknoinits
     - gocritic
     - gofmt
@@ -28,10 +26,9 @@ linters:
     - nolintlint
     - revive
     - staticcheck
-    - structcheck
     - typecheck
     - unparam
-    - varcheck
+    - unused
     - whitespace
 
 issues:

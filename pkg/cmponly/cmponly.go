@@ -3,9 +3,10 @@ package cmponly
 import (
 	"reflect"
 
-	"github.com/azuline/cmponly/internal/slices"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+
+	"github.com/azuline/cmponly/internal/slices"
 )
 
 func Fields[S any](structType S, fields ...string) cmp.Option {

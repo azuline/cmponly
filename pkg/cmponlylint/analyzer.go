@@ -7,8 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/azuline/cmponly/internal/slices"
 	"golang.org/x/tools/go/analysis"
+
+	"github.com/azuline/cmponly/internal/slices"
 )
 
 var Analyzer = &analysis.Analyzer{
@@ -52,8 +53,8 @@ func run(pass *analysis.Pass) (interface{}, error) {
 				}
 			} else if ident, ok := ce.Args[0].(*ast.Ident); ok {
 				obj := pass.TypesInfo.ObjectOf(ident)
-				if var_, ok := obj.(*types.Var); ok {
-					if named, ok := var_.Type().(*types.Named); ok {
+				if varr, ok := obj.(*types.Var); ok {
+					if named, ok := varr.Type().(*types.Named); ok {
 						if s, ok := named.Underlying().(*types.Struct); ok {
 							structure = s
 						}
