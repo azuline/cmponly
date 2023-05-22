@@ -27,3 +27,6 @@ go.work
 
 # Intermediate testing files
 .test
+
+# Build artifacts
+/bin

@@ -1,5 +1,5 @@
 build:
-	go build ./cmd/cmponlylint
+	go build -o ./bin/cmponlylint ./cmd/cmponlylint
 
 test:
 	go test ./...
