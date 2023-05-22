@@ -32,8 +32,9 @@ func ExampleTest(t *testing.T) {
 ```
 
 However, this pattern comes with a footgun: if we refactor `Record`'s fields to
-be named `C` and `D` instead, `cmponly.Fields` will not autorefactor or fail
-typechecking. `cmp.Diff` will compare 0 fields and vacuously pass.
+be named `C` and `D` instead, and forget to update `cmponly.Fields`'s
+parameters, `cmponly.Fields` will not autorefactor or fail typechecking.
+`cmp.Diff` will compare 0 fields and vacuously pass.
 
 The `cmponlylint` linter solves this footgun. This linter checks that all
 specified fields are valid fields on the struct being compared. So in the above
