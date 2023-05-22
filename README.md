@@ -71,13 +71,21 @@ TODO: standalone
 
 TODO: golangci-lint
 
-## Development
+## Development & Builds
 
 A Nix dev shell is provided to configure the development environment.
 
 Tests can be ran with `make test`. Since `analysistest` does not support Go
 modules, we have instead implemented a hacky test harness that checks the
 output of the self-contained linter command.
+
+The `golangci-lint` plugin can be built with the Nix environment:
+
+```sh
+$ nix build .#packages.x86_64-linux.golangci-lint-plugin
+$ ls result/lib
+cmponlylint-plugin.so
+```
 
 ## License
 

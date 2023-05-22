@@ -21,8 +21,9 @@
 go.work
 
 # Nix stuff
-.cache
-.direnv
+/.cache
+/.direnv
+/result
 
 # Intermediate testing files
 .test

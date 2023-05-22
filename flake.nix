@@ -9,6 +9,20 @@
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system}; in rec {
+        packages = {
+          # A little wasteful, but I'm too lazy to copy paste the specific
+          # build steps needed to only build a Go plugin.
+          golangci-lint-plugin = pkgs.buildGoModule {
+            pname = "cmponlylint-plugin";
+            version = "0.1.0";
+            src = ./.;
+            vendorHash = "sha256-ddr/EBbZorkvnA3leu+GNHG81wTIjNwqUJ1fVK4cPys=";
+            postBuild = ''
+              mkdir -p $out/lib
+              go build -buildmode=plugin -o $out/lib/cmponlylint-plugin.so ./pkg/gocilintplugin
+            '';
+          };
+        };
         devShell = pkgs.mkShell {
           buildInputs = [
             (pkgs.buildEnv {
