@@ -20,6 +20,8 @@
 # Go workspace file
 go.work
 
+# Nix stuff
+.cache
 .direnv
 
 # Intermediate testing file
