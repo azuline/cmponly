@@ -19,7 +19,7 @@
             vendorHash = "sha256-ddr/EBbZorkvnA3leu+GNHG81wTIjNwqUJ1fVK4cPys=";
             postBuild = ''
               mkdir -p $out/lib
-              go build -buildmode=plugin -o $out/lib/cmponlylint-plugin.so ./pkg/gocilintplugin
+              go build -buildmode=plugin -o $out/lib/cmponlylint-plugin.so ./gocilintplugin
             '';
           };
         };

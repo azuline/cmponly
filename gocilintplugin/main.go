@@ -3,7 +3,7 @@ package main
 import (
 	"golang.org/x/tools/go/analysis"
 
-	"github.com/azuline/cmponly/pkg/cmponlylint"
+	"github.com/azuline/cmponly/cmponlylint"
 )
 
 type analyzerPlugin struct{}
