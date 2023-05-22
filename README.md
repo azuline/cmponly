@@ -11,9 +11,9 @@ So for example:
 
 ```go
 import (
-	"testing"
-	"github.com/azuline/cmponly/pkg/cmponly"
-	"github.com/google/go-cmp/cmp"
+  "testing"
+  "github.com/azuline/cmponly/pkg/cmponly"
+  "github.com/google/go-cmp/cmp"
 )
 
 type Record struct {
