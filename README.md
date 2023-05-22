@@ -46,10 +46,12 @@ example.go:9:32 specified fields do not exist on struct: A
 ## Motivation & Tradeoffs
 
 brandur's [PartialEqual](https://brandur.org/fragments/partial-equal) describes
-the motivation well.
+the motivation well, and is another solution to the same problem of partial
+struct equality assertions.
 
-After playing around with brandur's `PartialEqual`, I thought the zero-values
-footgun too dangerous. `cmponly` is an alternative with different tradeoffs.
+However, after playing around with brandur's `PartialEqual`, I thought the
+zero-values footgun too dangerous. `cmponly` is an alternative with different
+tradeoffs.
 
 I find the tradeoffs in `cmponly` to be more palatable, as `cmponly`:
 
