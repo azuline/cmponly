@@ -63,7 +63,7 @@ However, this package has a few cons:
 
 - Fields must be specified twice, once in the `want` struct, and again in the
   `cmponly.Fields` function call.
-- It is refactoring semi-unfriendly, does not support LSP auto-rename.
+- It is refactoring semi-unfriendly, as it does not support LSP auto-rename.
 - It requires an additional linter.
 
 ## Usage
@@ -76,9 +76,10 @@ TODO: golangci-lint
 
 A Nix dev shell is provided to configure the development environment.
 
-Tests can be ran with `make test`. Since `analysistest` does not support Go
-modules, we have instead implemented a hacky test harness that checks the
-output of the self-contained linter command.
+Tests can be ran with `make test`. Note that since `analysistest` does not
+support Go modules, we have instead implemented a hacky test harness
+(`./test-linter.sh`) that checks the output of the self-contained linter
+command.
 
 The `golangci-lint` plugin can be built with the Nix environment:
 
