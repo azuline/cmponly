@@ -1,5 +1,5 @@
-/home/blissful/devel/cmponly/testdata/test.go:28:21: fields do not exist on struct: E
-/home/blissful/devel/cmponly/testdata/test.go:29:21: fields do not exist on struct: E
-/home/blissful/devel/cmponly/testdata/test.go:30:21: fields do not exist on struct: E
-/home/blissful/devel/cmponly/testdata/test.go:31:21: fields do not exist on struct: E
+test.go:28:21: fields do not exist on struct: E
+test.go:29:21: fields do not exist on struct: E
+test.go:30:21: fields do not exist on struct: E
+test.go:31:21: fields do not exist on struct: E
 exit status 3
