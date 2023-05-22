@@ -3,7 +3,7 @@ build:
 
 test:
 	go test ./...
-	./test-lint.sh
+	./test-linter.sh
 
 lint:
 	golangci-lint run --fix --config .golangci.yml ./...
