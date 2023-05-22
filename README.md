@@ -73,6 +73,10 @@ TODO: golangci-lint
 
 A Nix dev shell is provided to configure the development environment.
 
+Tests can be ran with `make test`. Since `analysistest` does not support Go
+modules, we have instead implemented a hacky test harness that checks the
+output of the self-contained linter command.
+
 ## License
 
 ```
