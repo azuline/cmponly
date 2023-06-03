@@ -63,7 +63,8 @@ However, this package has a few cons:
 
 - Fields must be specified twice, once in the `want` struct, and again in the
   `cmponly.Fields` function call.
-- It is refactoring semi-unfriendly, as it does not support LSP auto-rename.
+- It is refactoring semi-unfriendly, as LSP does not recognize stringified
+  field names.
 - It requires an additional linter.
 
 ## Usage
